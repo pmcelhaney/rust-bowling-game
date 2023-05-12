@@ -15,30 +15,42 @@ pub mod game {
 
         pub fn score(&self) -> i32 {
             let mut score = 0;
-            for i in 0..self.rolls.len() {
-                score += self.rolls[i];
-                if self.is_spare(i) {
-                    score += self.rolls[i + 2];
-                }
+
+            let mut i: usize = 0;
+
+            for _frame_index in 0..10 {
                 if self.is_strike(i) {
-                    score += self.rolls[i + 1] + self.rolls[i + 2];
+                    score += self.strike_score(i);
+                    i += 1;
+                } else if self.is_spare(i) {
+                    score += self.spare_score(i);
+                    i += 2;
+                } else {
+                    score += self.sum_of_balls_in_frame(i);
+                    i += 2;
                 }
             }
             score
         }
 
-        fn is_spare(&self, frame_index: usize) -> bool {
-            if (frame_index + 1) >= self.rolls.len() {
-                return false;
-            }
-            self.rolls[frame_index] + self.rolls[frame_index + 1] == 10
+        fn is_strike(&self, roll_index: usize) -> bool {
+            self.rolls[roll_index] == 10
         }
 
-        fn is_strike(&self, frame_index: usize) -> bool {
-            if (frame_index + 2) >= self.rolls.len() - 1 {
-                return false;
-            }
-            self.rolls[frame_index] == 10
+        fn is_spare(&self, roll_index: usize) -> bool {
+            self.rolls[roll_index] + self.rolls[roll_index + 1] == 10
+        }
+
+        fn strike_score(&self, roll_index: usize) -> i32 {
+            10 + self.rolls[roll_index + 1] + self.rolls[roll_index + 2]
+        }
+
+        fn spare_score(&self, roll_index: usize) -> i32 {
+            10 + self.rolls[roll_index + 2]
+        }
+
+        fn sum_of_balls_in_frame(&self, roll_index: usize) -> i32 {
+            self.rolls[roll_index] + self.rolls[roll_index + 1]
         }
     }
 
