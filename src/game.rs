@@ -17,8 +17,18 @@ pub mod game {
             let mut score = 0;
             for i in 0..self.rolls.len() {
                 score += self.rolls[i];
+                if self.is_spare(i) {
+                    score += self.rolls[i + 2];
+                }
             }
             score
+        }
+
+        fn is_spare(&self, frame_index: usize) -> bool {
+            if (frame_index + 1) >= self.rolls.len() {
+                return false;
+            }
+            self.rolls[frame_index] + self.rolls[frame_index + 1] == 10
         }
     }
 
