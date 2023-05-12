@@ -62,12 +62,28 @@ mod tests {
     }
 
     #[test]
+    fn test_all_nines() {
+        let mut game = Game::new();
+
+        game.add_scores("9- 9- 9- 9- 9- 9- 9- 9- 9- 9-".to_string());
+
+        assert_eq!(game.score(), 90);
+    }
+
+    #[test]
+    fn test_fives() {
+        let mut game = Game::new();
+
+        game.add_scores("5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/5".to_string());
+
+        assert_eq!(game.score(), 150);
+    }
+
+    #[test]
     fn test_all_strikes() {
         let mut game = Game::new();
 
-        for _ in 0..12 {
-            game.roll(10);
-        }
+        game.add_scores("X X X X X X X X X X X X".to_string());
 
         assert_eq!(game.score(), 300);
     }

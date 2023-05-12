@@ -13,7 +13,7 @@ pub mod game {
             }
         }
 
-        pub fn score_from_string(&mut self, input: String) {
+        pub fn add_scores(&mut self, input: String) {
             for (_i, c) in input.char_indices() {
                 self.roll_char(c);
             }

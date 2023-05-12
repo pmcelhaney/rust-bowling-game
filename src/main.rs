@@ -10,7 +10,7 @@ fn main() {
 
     let mut game = Game::new();
 
-    game.score_from_string(input);
+    game.add_scores(input);
 
     println!("Score: {}", game.score());
 }
