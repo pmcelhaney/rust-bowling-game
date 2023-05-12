@@ -43,6 +43,32 @@ mod tests {
             game.roll(0);
         }
 
-        assert_eq!(game.score(), 11 + 1);
+        assert_eq!(game.score(), (10 + 1) + 1);
+    }
+
+    #[test]
+    fn test_one_strike() {
+        let mut game = Game::new();
+
+        game.roll(10);
+        game.roll(5);
+        game.roll(3);
+
+        for _ in 3..20 {
+            game.roll(0);
+        }
+
+        assert_eq!(game.score(), (10 + 5 + 3) + 5 + 3);
+    }
+
+    #[test]
+    fn test_all_strikes() {
+        let mut game = Game::new();
+
+        for _ in 0..12 {
+            game.roll(10);
+        }
+
+        assert_eq!(game.score(), 300);
     }
 }

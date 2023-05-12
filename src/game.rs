@@ -20,6 +20,9 @@ pub mod game {
                 if self.is_spare(i) {
                     score += self.rolls[i + 2];
                 }
+                if self.is_strike(i) {
+                    score += self.rolls[i + 1] + self.rolls[i + 2];
+                }
             }
             score
         }
@@ -29,6 +32,13 @@ pub mod game {
                 return false;
             }
             self.rolls[frame_index] + self.rolls[frame_index + 1] == 10
+        }
+
+        fn is_strike(&self, frame_index: usize) -> bool {
+            if (frame_index + 2) >= self.rolls.len() - 1 {
+                return false;
+            }
+            self.rolls[frame_index] == 10
         }
     }
 
