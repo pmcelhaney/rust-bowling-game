@@ -2,15 +2,44 @@ pub mod game {
 
     pub struct Game {
         rolls: Vec<i32>,
+        last_roll: i32,
     }
 
     impl Game {
         pub fn new() -> Game {
-            Game { rolls: Vec::new() }
+            Game {
+                rolls: Vec::new(),
+                last_roll: 0,
+            }
+        }
+
+        pub fn score_from_string(&mut self, input: String) {
+            for (_i, c) in input.char_indices() {
+                self.roll_char(c);
+            }
+        }
+
+        pub fn roll_char(&mut self, c: char) {
+            if c == 'X' {
+                self.roll(10)
+            }
+
+            if c == '/' {
+                self.roll(10 - self.last_roll);
+            }
+
+            if c == '-' {
+                self.roll(0);
+            }
+
+            if c.is_numeric() {
+                self.roll(c.to_digit(10).unwrap() as i32);
+            }
         }
 
         pub fn roll(&mut self, pins: i32) {
             self.rolls.push(pins);
+            self.last_roll = pins;
         }
 
         pub fn score(&self) -> i32 {

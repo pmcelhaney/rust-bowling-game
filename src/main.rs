@@ -10,24 +10,7 @@ fn main() {
 
     let mut game = Game::new();
 
-    for (i, c) in input.char_indices() {
-        if c == 'X' {
-            game.roll(10)
-        }
-
-        if c == '/' {
-            let last_roll = input.chars().nth(i - 1).unwrap().to_digit(10).unwrap() as i32;
-            game.roll(10 - last_roll);
-        }
-
-        if c == '-' {
-            game.roll(0);
-        }
-
-        if c.is_numeric() {
-            game.roll(c.to_digit(10).unwrap() as i32);
-        }
-    }
+    game.score_from_string(input);
 
     println!("Score: {}", game.score());
 }
